@@ -5,6 +5,9 @@
 
 int main(int argc, char *argv[])
 {
+    int tailleX;
+    int tailleY;
+
     if(0 != SDL_Init(SDL_INIT_EVERYTHING))
     {
         fprintf(stderr, "Erreur SDL_Init : %s", SDL_GetError());
@@ -28,8 +31,31 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Erreur SDL_Renderer : %s", SDL_GetError);
         goto Quit;
     }
+
+    SDL_Rect coord;
+    coord.w = 64;
+    coord.h = 64;
+    SDL_GetWindowSize(windowMain, &tailleX, &tailleY);
+
+    SDL_Texture *texture = NULL;
+    for (int i = 0 ; i < tailleX/64 ; i++)
+        for(int j = 0 ; j < tailleY/64 ; i++)
+        {
+            if(i == 0)
+            {
+                if(j == 0)
+                {
+                    texture = IMG_LoadTexture(rendu, "../ressources/murs/mur_angle_gh.png");
+                    coord.x = 0;
+                    coord.y = 0;
+                    SDL_RenderCopy(rendu, texture, NULL, &coord);
+                }
+            }
+        }
     
 Quit:
+    if(texture != NULL)
+        SDL_DestroyTexture(texture);
     if(rendu != NULL)
         SDL_DestroyRenderer(rendu);
     if(windowMain != NULL)
