@@ -1,4 +1,4 @@
-#include "sdl_fonctions.h"
+#include "../include/sdl_fonctions.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,19 +44,29 @@ int initAll(SDL_Window **wind, SDL_Renderer **renderer, SDL_Texture **texture)
     return statut;    
 }
 
-int drawMap(char **adresse)
+int drawMap(char *adresse, SDL_Texture **texture, SDL_Renderer **renderer, SDL_Window **wind)
 {
-        char ligne[64];
-        FILE *f = fopen(adresse, "r");
-        int j = 0;
-        while(fgets(ligne, 63, f) != NULL)
+    /*fonctions qui permettra dans la partie 2 une modularite plus importante*/
+    int statut = EXIT_SUCCESS;
+    char ligne[64];
+    FILE *f = fopen(adresse, "r");
+    int j = 0;
+    while(fgets(ligne, 63, f) != NULL)
+    {
+        for (int i = 0 ; i < strlen(ligne) ; i++)
         {
-            for (int i = 0 ; i < strlen(ligne) ; i++)
+            if(ligne[i] == 0)
             {
-                
+                *texture=IMG_LoadTexture(*renderer, "ressources/murs/coin_hg.png");
+                if(*texture == NULL)
+                {
+                    fprintf(stderr, "Erreur IMG_LoadTexture : %s", SDL_GetError());
+                    statut = EXIT_FAILURE;
+                }
             }
-            j++;
         }
+        j++;
+    }
 
-        fclose(f)
+    fclose(f);
 }
