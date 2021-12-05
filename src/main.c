@@ -27,26 +27,8 @@ int main(int argc, char **argv)
     char hall[128] = "data/hall.map";
 
     statut =initAll(&windowMain, &renderer, &texture);
-    //drawMap(hall, &texture, &renderer, &windowMain); fonctions prévue pour la partie 2
-
-    /*texture=IMG_LoadTexture(renderer, "ressources/murs/coin_hg.png");
-    if(texture == NULL)
-    {
-        fprintf(stderr, "Erreur IMG_LoadTexture : %s", SDL_GetError());
-        statut = EXIT_FAILURE;
-    }
-    SDL_RenderCopy(renderer, texture, NULL, &coord);
-    SDL_RenderPresent(renderer);
-    */
-
-
-
     
-
-
-
-
-    int tailleX, tailleY;
+    /*int tailleX, tailleY;
     SDL_GetWindowSize(windowMain, &tailleX, &tailleY);
 
     for (int i = 0 ; i < tailleY ; i+=32)
@@ -104,8 +86,9 @@ int main(int argc, char **argv)
         statut = EXIT_FAILURE;
     }
     SDL_RenderCopy(renderer, texture, NULL, &coord);
-    SDL_RenderPresent(renderer);
+    SDL_RenderPresent(renderer);*/
 
+    statut = drawMap(hall, &texture, &renderer, &windowMain);
     SDL_Delay(10000);
     
     Quit:
